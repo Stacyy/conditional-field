@@ -150,5 +150,37 @@ describe('ConditionalField', function() {
         expect($('.test-checkbox .bowie').is(':visible')).to.equal(false)
       });
     });
+
+	  describe('and the control is a `select` element with multiple attribute', function(){
+		  it('shows only visible elements declared in visibility', function() {
+			  new ConditionalField({
+				  control: '.test-multiple-select select',
+				  visibility: {
+					  'test1': '.test-multiple-select .zappa',
+					  'test3': '.test-multiple-select .bowie'
+				  }
+			  });
+
+			  $('.test-multiple-select select').val('test1').trigger('change');
+
+			  expect($('.test-multiple-select .zappa').is(':visible')).to.equal(true);
+			  expect($('.test-multiple-select .bowie').is(':visible')).to.equal(false);
+
+			  $('.test-multiple-select select').val(['test1', 'test2']).trigger('change');
+
+			  expect($('.test-multiple-select .zappa').is(':visible')).to.equal(true);
+			  expect($('.test-multiple-select .bowie').is(':visible')).to.equal(false);
+
+			  $('.test-multiple-select select').val(['test1', 'test2', 'test3', 'test4']).trigger('change');
+
+			  expect($('.test-multiple-select .zappa').is(':visible')).to.equal(true);
+			  expect($('.test-multiple-select .bowie').is(':visible')).to.equal(true);
+
+			  $('.test-multiple-select select').val(['test2', 'test3', 'test4']).trigger('change');
+
+			  expect($('.test-multiple-select .zappa').is(':visible')).to.equal(false);
+			  expect($('.test-multiple-select .bowie').is(':visible')).to.equal(true);
+		  });
+	  });
   });
 });

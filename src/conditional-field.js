@@ -18,11 +18,22 @@ class ConditionalField {
   }
 
   setVisible(value) {
-    for(let controlValue in this.args.visibility){
-      if(value == controlValue){
-        $(this.args.visibility[controlValue]).show();
-      }else{
-        $(this.args.visibility[controlValue]).hide();
+    for (var controlValue in this.args.visibility) {
+      if(Array.isArray(value)){
+        for(var i = 0; i < value.length; i++){
+          if (value[i] == controlValue) {
+            $(this.args.visibility[controlValue]).show();
+            break;
+          } else{
+            $(this.args.visibility[controlValue]).hide();
+          }
+        }
+      } else{
+        if (value == controlValue) {
+          $(this.args.visibility[controlValue]).show();
+        } else{
+          $(this.args.visibility[controlValue]).hide();
+        }
       }
     }
   }
