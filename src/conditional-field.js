@@ -24,14 +24,14 @@ class ConditionalField {
           if (value[i] == controlValue) {
             $(this.args.visibility[controlValue]).show();
             break;
-          } else{
+          }else{
             $(this.args.visibility[controlValue]).hide();
           }
         }
-      } else{
+      }else{
         if (value == controlValue) {
           $(this.args.visibility[controlValue]).show();
-        } else{
+        }else{
           $(this.args.visibility[controlValue]).hide();
         }
       }
