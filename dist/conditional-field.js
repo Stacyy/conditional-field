@@ -1,8 +1,28 @@
 'use strict';
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _createClass = function () {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor) descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+  return function (Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) defineProperties(Constructor, staticProps);
+    return Constructor;
+  };
+}();
+
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+}
 
 var ConditionalField = function () {
   function ConditionalField(args) {
@@ -29,23 +49,54 @@ var ConditionalField = function () {
   }, {
     key: 'setVisible',
     value: function setVisible(value) {
-      for (var controlValue in this.args.visibility) {
-        if(Array.isArray(value)){
-          for(var i = 0; i < value.length; i++){
-            if (value[i] == controlValue) {
-              $(this.args.visibility[controlValue]).show();
-              break;
-            }else{
-              $(this.args.visibility[controlValue]).hide();
-            }
-          }
-        }else{
-          if (value == controlValue) {
-            $(this.args.visibility[controlValue]).show();
-          }else{
-            $(this.args.visibility[controlValue]).hide();
+
+      var controlValues = Object.values(this.args.visibility),
+          controlKeys = Object.keys(this.args.visibility),
+          propertyEqualByValue = [],
+          valueInVisibility,
+          valueNotInVisibility;
+
+      if (Array.isArray(value)) {
+        valueInVisibility = controlKeys.filter(
+            function (item) {
+              return value.indexOf(item) != -1;
+            });
+
+        valueNotInVisibility = controlKeys.filter(
+            function (item) {
+              return value.indexOf(item) == -1;
+            });
+      } else {
+        valueInVisibility = controlKeys.filter(
+            function (item) {
+              return item == value;
+            });
+
+        valueNotInVisibility = controlKeys.filter(
+            function (item) {
+              return item != value;
+            });
+      }
+
+      for (var i = 0; i < valueInVisibility.length; i++) {
+        for (var j = 0; j < controlValues.length; j++) {
+          if (this.args.visibility[valueInVisibility[i]] == controlValues[j]) {
+            propertyEqualByValue.push(controlKeys[j]);
           }
         }
+      }
+
+      valueNotInVisibility = valueNotInVisibility.filter(
+          function (item) {
+            return propertyEqualByValue.indexOf(item) == -1;
+          });
+
+      for (var i = 0; i < valueInVisibility.length; i++) {
+        $(this.args.visibility[valueInVisibility[i]]).show();
+      }
+
+      for (var j = 0; j < valueNotInVisibility.length; j++) {
+        $(this.args.visibility[valueNotInVisibility[j]]).hide();
       }
     }
   }, {

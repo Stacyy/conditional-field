@@ -61,16 +61,35 @@
       <div class="bowie">David Bowie</div>
     </div>
 
+    <div class="test-multiple-keys">
+      <input type="text">
+
+      <div class="zappa">Frank Zappa</div>
+      <div class="bowie">David Bowie</div>
+    </div>
+
+    <div class="test-multiple-keys-in-the-multiple-field">
+      <select multiple>
+        <option value="test1">Test value 1</option>
+        <option value="test2">Test value 2</option>
+        <option value="test3">Test value 3</option>
+        <option value="test4">Test value 4</option>
+      </select>
+
+      <div class="zappa">Frank Zappa</div>
+      <div class="bowie">David Bowie</div>
+    </div>
+
   </form>
 
   <script src="https://cdn.rawgit.com/jquery/jquery/2.1.4/dist/jquery.min.js"></script>
   <script src="https://cdn.rawgit.com/Automattic/expect.js/0.3.1/index.js"></script>
   <script src="https://cdn.rawgit.com/mochajs/mocha/2.2.5/mocha.js"></script>
 
-  <script src="/dist/conditional-field.js"></script>
+  <script src="../dist/conditional-field.js"></script>
 
   <script>mocha.setup('bdd')</script>
-  <script src="/test/conditional-field-test.js"></script>
+  <script src="./conditional-field-test.js"></script>
   <script>
     mocha.checkLeaks();
     mocha.globals(['jQuery']);
